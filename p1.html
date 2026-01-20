@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Seaweed Lab Practical 1</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Georgia, serif;
+    background: #f2efe7;
+    color: #3a2f24;
+}
+/* TITLE BOX */
+.title-box{
+    border:3px solid #3a2f24;
+    margin:30px auto;
+    padding:20px;
+    width:80%;
+    text-align:center;
+    background:#fff;
+    border-radius:15px;
+}
+
+/* GRID CONTAINER */
+.container{
+    padding:40px 8%;
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap:30px;
+	}
+
+.item-box {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 20px;
+    display: flex;
+    gap: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    cursor: pointer;
+}
+
+.image-box {
+    width: 220px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.image-box img {
+    width: 100%;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0,0,0,0.45);
+    z-index: 100;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 35px;
+    border-radius: 20px;
+    max-width: 850px;
+    width: 90%;
+    max-height: 85vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.modal-images {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.modal-images img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 14px;
+}
+/* MOBILE VIEW */
+@media (max-width: 900px){
+    .container{
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- TITLE -->
+<div class="title-box">
+    <h1>Seaweed Lab Practical 1</h1>
+</div>
+
+<section class="container">
+
+<!-- ITEM 1 -->
+<div class="item-box" onclick="openModal('modal1')">
+    <div class="image-box">
+        <img src="Tohira Hokkaido Cut Konbu.jpg">
+        <img src="1.jpg">
+    </div>
+    <div>
+        <h3>Tohira Hokkaido Cut Konbu</h3>
+        <p>Click to explore detailed description</p>
+    </div>
+</div>
+
+<!-- ITEM 2 -->
+<div class="item-box" onclick="openModal('modal2')">
+    <div class="image-box">
+        <img src="Fujicco Benri Wakame Dried Salted Seaweed.jpeg">
+        <img src="2.jpg">
+    </div>
+    <div>
+        <h3>Fujicco Benri Wakame Dried Salted Seaweed</h3>
+        <p>Click to explore detailed description</p>
+    </div>
+</div>
+
+<!-- ITEM 3 -->
+<div class="item-box" onclick="openModal('modal3')">
+    <div class="image-box">
+        <img src="RedAgar Seaweed.jpeg">
+        <img src="3.jpg">
+    </div>
+    <div>
+        <h3>Homegrown Seaweed (SaraAiy)</h3>
+        <p>Click to explore detailed description</p>
+    </div>
+</div>
+
+<!-- ITEM 4 -->
+<div class="item-box" onclick="openModal('modal4')">
+    <div class="image-box">
+        <img src="tohira kelp">
+        <img src="4.jpg">
+    </div>
+    <div>
+        <h3>Kelp (Tohira Hidaka Konbu)</h3>
+        <p>Click to explore detailed description</p>
+    </div>
+</div>
+
+<!-- ITEM 5 -->
+<div class="item-box" onclick="openModal('modal5')">
+    <div class="image-box">
+        <img src="Crispy Seaweed With Pumpkin Seed Original.jpeg">
+        <img src="5.jpg">
+    </div>
+    <div>
+        <h3>Crispy Seaweed With Pumpkin Seed Original</h3>
+        <p>Click to explore detailed description</p>
+    </div>
+</div>
+
+<!-- ITEM 6 -->
+<div class="item-box" onclick="openModal('modal6')">
+    <div class="image-box">
+        <img src="Crispy Seaweed With Almonds Slices Original.jpeg">
+        <img src="6.jpg">
+    </div>
+    <div>
+        <h3>Crispy Seaweed With Almonds Slices Original</h3>
+        <p>Click to explore detailed description</p>
+    </div>
+</div>
+
+<!-- ITEM 7 -->
+<div class="item-box" onclick="openModal('modal7')">
+    <div class="image-box">
+        <img src="Kaisou Salad.jpeg">
+        <img src="7.jpg">
+    </div>
+    <div>
+        <h3>Dried Seaweed (Sanko Kaisou Salad)</h3>
+        <p>Click to explore detailed description</p>
+    </div>
+</div>
+
+<!-- ITEM 8 -->
+<div class="item-box" onclick="openModal('modal8')">
+    <div class="image-box">
+        <img src="Dried Brown Seaweed.jpeg">
+        <img src="9.jpg">
+    </div>
+    <div>
+        <h3>Dried Brown Seaweed</h3>
+        <p>Click to explore detailed description</p>
+    </div>
+</div>
+
+<!-- ITEM 9 -->
+<div class="item-box" onclick="openModal('modal9')">
+    <div class="image-box">
+        <img src="Wasabi Flavour.jpeg">
+        <img src="11.jpg">
+    </div>
+    <div>
+        <h3>Seasoned Korean Seaweed / Crunchy Seaweed Snack (Wasabi Flavour)</h3>
+        <p>Click to explore detailed description</p>
+    </div>
+</div>
+
+<!-- ITEM 10 -->
+<div class="item-box" onclick="openModal('modal10')">
+    <div class="image-box">
+        <img src="12.jpg">
+    </div>
+    <div>
+        <h3>King Oyster Mushroom </h3>
+        <p>Click to explore detailed description</p>
+    </div>
+</div>
+
+<!-- ITEM 11-->
+<div class="item-box" onclick="openModal('modal11')">
+    <div class="image-box">
+        <img src="13.jpg">
+    </div>
+    <div>
+        <h3>Brown Button Mushroom</h3>
+        <p>Click to explore detailed description</p>
+    </div>
+</div>
+
+<!-- ITEM 12-->
+<div class="item-box" onclick="openModal('modal12')">
+    <div class="image-box">
+	    <img src="Spicy Flavour.jpeg">
+        <img src="14.jpg">
+    </div>
+    <div>
+        <h3>Seaweed (Crispy Tempura Seaweed Snack : Spicy Flavour)</h3>
+        <p>Click to explore detailed description</p>
+    </div>
+</div>
+
+<!-- ITEM 13-->
+<div class="item-box" onclick="openModal('modal13')">
+    <div class="image-box">
+	    <img src="Hot & Spicy Flavour.jpeg">
+        <img src="10.jpg">
+    </div>
+    <div>
+        <h3>Crispy Seaweed with Almond Slices Hot & Spicy Flavour </h3>
+        <p>Click to explore detailed description</p>
+    </div>
+</div>
+
+
+<!-- ITEM 14-->
+<div class="item-box" onclick="openModal('modal14')">
+    <div class="image-box">
+	    <img src="Wasabi Flavour.jpeg">
+        <img src="16.jpg">
+    </div>
+    <div>
+        <h3>NOI Crispy Tempura Seaweed Snack (Wasabi Flavour) </h3>
+        <p>Click to explore detailed description</p>
+    </div>
+</div>
+
+<!-- ITEM 15-->
+<div class="item-box" onclick="openModal('modal15')">
+    <div class="image-box">
+	    <img src="Enoki Mushroom (First Pick brand).jpeg">
+        <img src="15.jpg">
+    </div>
+    <div>
+        <h3>Enoki Mushroom (First Pick brand)</h3>
+        <p>Click to explore detailed description</p>
+    </div>
+</div>
+
+<!-- ITEM 16-->
+<div class="item-box" onclick="openModal('modal16')">
+    <div class="image-box">
+	    <img src="Big Bang Grilled Seaweed Hot & Spicy Flavour.jpeg">
+        <img src="17.jpg">
+    </div>
+    <div>
+        <h3>Big Bang Grilled Seaweed Hot & Spicy Flavour (Tao Kae Noi brand)</h3>
+        <p>Click to explore detailed description</p>
+    </div>
+</div>
+
+<!-- ITEM 17-->
+<div class="item-box" onclick="openModal('modal17')">
+    <div class="image-box">
+        <img src="Fresh Black Fungus Mushroom.jpeg">
+    </div>
+    <div>
+        <h3>Fresh Black Fungus Mushroom</h3>
+        <p>Click to explore detailed description</p>
+    </div>
+</div>
+</section>
+
+<!-- MODAL 1 -->
+<div class="modal" id="modal1">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('modal1')">×</span>
+
+    <div class="modal-images">
+      <img src="Tohira Hokkaido Cut Konbu.jpg">
+      <img src="1.jpg">
+    </div>
+
+    <h3>Tohira Hokkaido Cut Konbu</h3>
+	<h4>Scientific name: <i>Saccharina japonica</i> (Family: Laminariaceae)</h4> 
+	<p><strong>Common name:</strong> Kombu (Kelp), A brown seaweed harvested in Hokkaido, Japan</p>
+	<p><strong>Ingredients:</strong> Dried cut kombu seaweed.</p> 
+	<p><strong>Producer:</strong> Tohira Konbu Kalso Co.</p> 
+	<p><strong>Benefits:</strong></p> <ul>
+	<li>Rich source of umami flavor used in broths (e.g. dashi)</li> 
+	<li>High in dietary fiber</li> <li>Contains minerals, especially iodine</li>
+	<li>Contains fucoidan which may support thyroid function, digestion, and metabolism</li> 
+	</ul>
+  </div>
+</div>
+
+<!-- MODAL 2 -->
+<div class="modal" id="modal2">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('modal2')">×</span>
+
+    <div class="modal-images">
+      <img src="Fujicco Benri Wakame Dried Salted Seaweed.jpeg">
+      <img src="2.jpg">
+    </div>
+
+    <h3>Fujicco Benri Wakame Dried Salted Seaweed</h3>
+	<h4>Scientific name: <i>Undaria pinnatifida</i></h4> 
+	<p><strong>Common name:</strong>Wakame, A brown seaweed</p> 
+	<p><strong>Ingredients:</strong> Dried salted wakame seaweed</p>
+	<p><strong>Producer:</strong> Fujicco (Japanese-based producer)</p> 
+	<p><strong>Benefits:</strong></p> <ul> <li>Used widely in cooking (soups, salads, and miso dishes)</li>
+	<li>Low-calorie and rich in minerals (iodine, calcium, magnesium) and dietary fiber.</li>
+	<li>Supports thyroid health, digestion, and nutrient density in soups/salads.</li>
+	</ul>
+  </div>
+</div>
+
+<!-- MODAL 3 -->
+<div class="modal" id="modal3">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('modal3')">×</span>
+
+    <div class="modal-images">
+       <img src="RedAgar Seaweed.jpeg">
+        <img src="3.jpg">
+    </div>
+
+    <h3>Homegrown Seaweed (SaraAiy)</h3>
+	<h4>Scientific name: <i>Gracilaria changii</i></h4> 
+	<p><strong>Common name:</strong>Red/Agar Seaweed</p> 
+	<p><strong>Ingredients:</strong> Natural homegrown seaweed, No additives, Cholesterol-free, Low sodium, Low fat</p>
+	<p><strong>Producer:</strong> Saraiy (Local Malaysian aquaculture)</p> 
+	<p><strong>Benefits:</strong></p> <ul> <li>Has High dietary fibre which helps in gut health and digestion</li>
+	<li>Iodine - supports thyroid function</li>
+	<li>Iron & zinc - Supports blood health and immunity</li>
+	<li>Vitamin B12 & K</li>
+	<li>Contain antioxidants</li>
+	</ul>
+  </div>
+</div>
+
+<!-- MODAL 4 -->
+<div class="modal" id="modal4">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('modal4')">×</span>
+
+    <div class="modal-images">
+        <img src="OIP.jpeg">
+        <img src="4.jpg">
+    </div>
+
+    <h3>Kelp (Tohira Hidaka Konbu)</h3>
+	<h4>Scientific name: <i>Saccharina japonica</i></h4> 
+	<p><strong>Common name:</strong>Kombu</p> 
+	<p><strong>Ingredients:</strong> 100% dried kombu (kelp)</p>
+	<p><strong>Producer:</strong> Tohira (Japanese-style kombul kelp)</p> 
+	<p><strong>Benefits:</strong></p> <ul> <li>High in iodine, dietary fiber, and minerals such as calcium and magnesium.</li>
+	<li>Provides natural umami flavor due to the glutamic acid and useful in cooking stocks (dash - japanese soup stock).</li>
+	<li>Support thyroid health and digestion if consume or use in moderate amounts.</li>
+	</ul>
+  </div>
+</div>
+
+<!-- MODAL 5 -->
+<div class="modal" id="modal5">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('modal5')">×</span>
+
+    <div class="modal-images">
+       <img src="Crispy Seaweed With Pumpkin Seed Original.jpeg">
+        <img src="5.jpg">
+    </div>
+
+    <h3>Crispy Seaweed With Pumpkin Seed Original</h3>
+	<h4>Scientific name: <i>Porphyra or Pyropia spp. (red seaweed)</i></h4> 
+	<p><strong>Common name:</strong>Crispy seaweed snack or nori (edible seaweed)</p> 
+	<p><strong>Ingredients:</strong></p> <ul> </li>The majority is seaweed which is likely nori (red algae used for snacks)</li></p> 
+<li>White sesame seeds</li>
+<li>Pumpkin seeds</li>
+<li>Maltose </li>
+<li>Soy sauce </li>
+<li>Iodized salt</li>
+	<p><strong>Producer:</strong> NOI (Taiwan/Thailand product)</p> 
+	<p><strong>Benefits:</strong></p> <ul> 
+	<li>Minerals and fiber from seaweed</li>
+	<li>Healthy fats and protein from seeds</li>
+	<li>Lower calories than many fried snacks</li>
+	</ul>
+  </div>
+</div>
+
+<!-- MODAL 6 -->
+<div class="modal" id="modal6">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('modal6')">×</span>
+
+    <div class="modal-images">
+       <img src="Crispy Seaweed With Almonds Slices Original.jpeg">
+        <img src="6.jpg">
+    </div>
+
+    <h3>Crispy Seaweed With Almonds Slices Original</h3>
+	<h4>Scientific name: <i>Porphyra or Pyropia spp.(red seaweed)</i></h4> 
+	<p><strong>Common name:</strong>Crispy seaweed snack sheets</p> 
+	<p><strong>Ingredients:</strong></p> <ul> </li>Seaweed (nori-like)</li></p> 
+<li>Almonds</li>
+<li>Maltose</li>
+<li>Soy sauce </li>
+<li>Iodized salt</li>
+	<p><strong>Producer:</strong> NOI (Taiwan/Thailand product)</p> 
+	<p><strong>Benefits:</strong></p> <ul> 
+	<li>Minerals and fiber from seaweed</li>
+	<li>Healthy fats and protein from seeds</li>
+	<li>Lower calories than many fried snacks</li>
+	<li>Healthy fats/protein from almonds</li>
+	</ul>
+  </div>
+</div>
+
+
+<!-- MODAL 7-->
+<div class="modal" id="modal7">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('modal7')">×</span>
+
+    <div class="modal-images">
+       <img src="Kaisou Salad.jpeg">
+        <img src="7.jpg">
+    </div>
+
+    <h3>Dried Seaweed (Sanko Kaisou Salad)</h3>
+	<h4>Scientific name: <i>Wakame - Undaria pinnatifida (brown algae) 
+Nori type (seaweed) - Pyropia or Porphyra spp. </i></h4> 
+	<p><strong>Common name:</strong>Seaweed salad mix</p> 
+	<p><strong>Ingredients:</strong></p> <ul> </li>Mix of wakame</li></p> 
+<li>Wakame stems</li>
+<li>Red nori-like seaweed </li>
+	<p><strong>Producer:</strong> Sanko (Japanese dried salad product)</p> 
+	<p><strong>Benefits:</strong></p> <ul> 
+	<li>Rich in vitamins and minerals such as iodine, iron, and calcium</li>
+	<li>Contains dietary fiber and bioactive compounds good for digestion</li>
+	<li>Low calorie and nutritionally dense</li>
+	</ul>
+  </div>
+</div>
+
+
+<!-- MODAL 8-->
+<div class="modal" id="modal8">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('modal8')">×</span>
+
+    <div class="modal-images">
+       <img src="Dried Brown Seaweed.jpeg">
+        <img src="9.jpg">
+    </div>
+
+    <h3>Dried Brown Seaweed</h3>
+	<h4>Scientific name: <i>Pyropia yezoensis or Pyropia tenera </i></h4> 
+	<p><strong>Common name:</strong>Seasoned Korean Seaweed </p> 
+	<p><strong>Ingredients:</strong></p> <ul> </li>Seaweed (65%)</li></p> 
+<li>Corn Oil</li>
+<li>Salt</li>
+<li>Soybean(Contains soybean)</li>
+<li>Wasabi Seasoning (Wasabi Flavour Powder) </li>
+	<p><strong>Producer:</strong> WANG (korean seaweed brand)</p> 
+	<p><strong>Benefits:</strong></p> <ul> 
+	<li>Rich in iodine, which is essential for proper thyroid hormone production and regulation of metabolism.</li>
+
+<li>High dietary fibre content helps improve digestion, prevents constipation, and supports the growth of beneficial gut bacteria.</li>
+
+<li>Provides vitamins A, C, and B-complex, which support immune function, skin health, and energy metabolism.</li>
+
+<li>Contains natural antioxidants that help reduce oxidative stress and protect body cells from damage caused by free radicals.</li>
+
+	</ul>
+  </div>
+</div>
+
+
+
+<!-- MODAL 9-->
+<div class="modal" id="modal9">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('modal9')">×</span>
+
+    <div class="modal-images">
+       <img src="Wasabi Flavour.jpeg">
+        <img src="11.jpg">
+    </div>
+
+    <h3>Seasoned Korean Seaweed </h3>
+	<h4>Scientific name: <i>Pyropia yezoensis or Pyropia tenera </i></h4> 
+	<p><strong>Common name:</strong>Seasoned Korean Seaweed </p> 
+	<p><strong>Ingredients:</strong></p> <ul> </li>Seaweed (65%)</li></p> 
+<li>Corn Oil</li>
+<li>Salt</li>
+<li>Soybean(Contains soybean)</li>
+<li>Wasabi Seasoning (Wasabi Flavour Powder) </li>
+	<p><strong>Producer:</strong> Manjun Foods Co., Ltd., Korea</p> 
+	<p><strong>Benefits:</strong></p> <ul> 
+	<li>Rich in dietary fibre, which supports digestion and promotes healthy gut function.</li>
+    <li>Contains minerals such as iron and calcium, contributing to blood formation and bone strength.</li>
+	<li>Contains iodine, essential for proper thyroid function and metabolic regulation.</li>
+	<li>Provides vitamins A, C, and B-complex, which support immune function, skin health, and energy metabolism.</li>
+	</ul>
+  </div>
+</div>
+
+<!-- MODAL 10-->
+<div class="modal" id="modal10">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('modal10')">×</span>
+
+    <div class="modal-images">
+       
+        <img src="12.jpg">
+    </div>
+
+    <h3>King Oyster Mushroom </h3>
+	<h4>Scientific name: <i>Pleurotus eryngii </i></h4> 
+	<p><strong>Common name:</strong>King Oyster Mushroom</p> 
+	Seasoned Korean Seaweed /p> <ul> </li>Dried brown seaweed (100%)</li></p> 
+	<p><strong>Ingredients:</strong></p> <ul> </li>King oyster mushroom (Pleurotus eryngii) 100%</li>
+	<p><strong>Producer:</strong> cultivated in China, Korea, Japan, and Malaysia</p> 
+	<p><strong>Benefits:</strong></p> <ul> 
+	<li>A good source of dietary fibre, which aids digestion, promotes gut health, and helps maintain healthy cholesterol levels.</li>
+    <li>Contains high-quality protein and essential amino acids, supporting tissue growth, repair, and enzyme production.<l/i>
+    <li>Rich in B vitamins(B1, B2, B3, and B5), which play an important role in energy production and nervous system function.</li>
+<li>Provides minerals such as potassium, phosphorus, and iron, supporting muscle function, bone health, and oxygen transport in the blood.</li>
+	</ul>
+  </div>
+</div>
+
+
+<!-- MODAL 11-->
+<div class="modal" id="modal11">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('modal11')">×</span>
+
+    <div class="modal-images">
+      <img src="13.jpg">
+   
+    </div>
+
+    <h3>Brown Button Mushroom </h3>
+	<h4>Scientific name: <i>Agaricus bisporus </i></h4> 
+	<p><strong>Common name:</strong>Brown button mushroom</p> 
+	<p><strong>Ingredients:</strong></p> <ul> </li>Brown button mushroom (Agaricus bisporus) 100%</li>
+	<p><strong>Producer:</strong>Cultivated in Malaysia and other countries worldwide</p> 
+	<p><strong>Benefits:</strong></p> <ul> 
+	<li>Contains dietary fibre that improves digestion and supports overall gastrointestinal health.</i>
+<li>Contains potassium, which helps regulate blood pressure and supports proper heart function.</li>
+    <li>Rich in selenium, an important antioxidant mineral that supports immune function and helps protect cells from oxidative damage..<l/i>
+    <li>Rich in B vitamins(B1, B2, B3, and B5), which play an important role in energy production and nervous system function.</li>
+<li>Provides B vitamins, particularly riboflavin and niacin, which aid in energy metabolism and maintain healthy skin and nerves.</li>
+	</ul>
+  </div>
+</div>
+
+<!-- MODAL 12-->
+<div class="modal" id="modal12">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('modal12')">×</span>
+
+    <div class="modal-images">
+      <img src="Spicy Flavour.jpeg">
+        <img src="14.jpg">
+    </div>
+
+    <h3>Seaweed Crispy Tempura Seaweed Snack : Spicy Flavour </h3>
+	<h4>Scientific name: <i>Pyropia tenera and Porphyra spp. (red algae) </i></h4> 
+	<p><strong>Common name:</strong>Tempura Seaweed Snack </p> 
+	<p><strong>Ingredients:</strong></p> <ul> </li>Seaweed</li></p> 
+ <li>wheat  flour</li>
+ <li>Rice flour/ Modified corn starch</li>
+ <li>Palm olein/ Oil (batter)</li>
+ <li>Spicy seasoning (salt, sugar, chili, garlic, onion, yeast extract, MSG) </li>
+  <li>White sesame seeds/ Sunflower seeds/ Flax Seeds</li>
+	<p><strong>Producer:</strong>NOI</p> 
+	<p><strong>Benefits:</strong></p> <ul> 
+	<li>Rich in minerals such as iodine and calcium</i>
+<li>Contains dietary fiber and umami flavor compounds</li>
+    <li>Have carbohydrates and fats from the batter<l/i>
+    <li>The seeds add small amounts of healthy fats and micronutrients</li>
+	</ul>
+  </div>
+</div>
+
+
+<!-- MODAL 13-->
+<div class="modal" id="modal13">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('modal13')">×</span>
+
+    <div class="modal-images">
+      <img src="Hot & Spicy Flavour.jpeg">
+        <img src="10.jpg">
+    </div>
+
+    <h3>Crispy Seaweed with Almond Slices Hot & Spicy Flavour  </h3>
+	<h4>Scientific name: <i>Pyropia tenera and Porphyra spp. (red algae) </i></h4> 
+	<p><strong>Common name:</strong>Nori Seaweed </p> 
+	<p><strong>Ingredients:</strong></p> <ul> </li>Seaweed</li></p> 
+ <li>Seaweed 60%</li>
+ <li>White Sesame Seeds 15%</li>
+ <li>Almond Slices 14%</li>
+  <li>Maltose 5%</li>
+  <li>Packaging Gas [Nitrogen (INS 941)]</li>
+   <li>Anticaking agent [Silicon Dioxide (INS 551)]</li>
+    <li>Yeast Extract</li>
+  <li> Sweetener [Sucralose (INS 955)</li>
+   <li>Acidity Regulator [Citric Acid (INS 330)]</li>
+  <li>Iodised Salt 0.5%</li>
+  <li>Disodium 5’-Ribonucleotides (INS 635)</li>
+   <li>Spicy Seasoning (Contains Sugar, Salt, Chili, Garlic) 1.5%,</li>
+    <li>Flavour Enhancer [Monosodium Glutamate (INS 621)</li>
+ <li>Soy Sauce (Contains Soybeans, Wheat, Salt and Sugar) 4% </li>
+  <li>White sesame seeds/ Sunflower seeds/ Flax Seeds</li>
+	<p><strong>Producer:</strong>Taokaenoi Food & Marketing Public Company Limited</p> 
+	<p><strong>Benefits:</strong></p> <ul> 
+	<li>Support gut health due to high fiber content by feeding beneficial bacteria in the digestive tract.</li>
+<li>Packed with protective antioxidants that help shield the body's cells from damage caused by free radicals.</li>
+<li>The combination of nutrients may help reduce the risk of heart disease by managing cholesterol levels and supporting blood vessel function.</li>
+	</ul>
+  </div>
+</div>
+
+<!-- MODAL 14-->
+<div class="modal" id="modal14">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('modal14')">×</span>
+
+    <div class="modal-images">
+       <img src="Wasabi Flavour.jpeg">
+        <img src="16.jpg">
+    </div>
+
+    <h3>NOI Crispy Tempura Seaweed Snack (Wasabi Flavour)</h3>
+	<h4>Scientific name: <i>Pyropia spp. </i></h4> 
+	<p><strong>Common name:</strong>Red Seaweed </p> 
+	<p><strong>Ingredients:</strong></p> <ul> </li>Seaweed</li></p> 
+ <li>wheat  flour</li>
+ <li>Rice flour</li>
+ <li>Vegetable Oil (palm olein)</li>
+ <li>Wasabi seasoning</li>
+  <li>Sesame seeds</li>
+    <li> Egg white powder</li>
+<li>Salt</li>
+<li>Sugar</li>
+<li>flavour enhancers</li>
+	<p><strong>Producer:</strong>NOI</p> 
+	<p><strong>Benefits:</strong></p> <ul> 
+	<li>Convenient ready-to-eat snack</i>
+    <li>Provides iodine and trace minerals from seaweed</li>
+    <li>Contains plant-based protein and fibre<l/i>
+	</ul>
+  </div>
+</div>
+
+
+
+<!-- MODAL 15-->
+<div class="modal" id="modal15">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('modal15')">×</span>
+
+    <div class="modal-images">
+        <img src="Enoki Mushroom (First Pick brand).jpeg">
+        <img src="15.jpg">
+    </div>
+
+    <h3>Enoki Mushroom (First Pick brand)</h3>
+	<h4>Scientific name: <i>Flammulina filiformis</i></h4> 
+	<p><strong>Common name:</strong>Enoki Mushroom</p> 
+	<p><strong>Ingredients:</strong></p> <ul> </li>Pure enoki mushrooms 100%</li></p> 
+	<p><strong>Producer:</strong>Hor Fung Naturefresh Sdn. Bhd.</p> 
+	<p><strong>Benefits:</strong></p> <ul> 
+	<li>The high fiber content promotes healthy digestion, ensures regular bowel movements, and helps maintain a balanced gut microbiome.</i>
+    <li>They are rich in various antioxidants, such as gallic acid and quercetin, which help reduce oxidative damage and may lower the risk of chronic diseases.</i>
+    <li>Helps in lowering cholesterol and blood pressure, thereby supporting heart health and potentially reducing the risk of atherosclerosis and blood clots.</i>
+	</ul>
+  </div>
+</div>
+
+
+<!-- MODAL 16-->
+<div class="modal" id="modal16">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('modal16')">×</span>
+
+    <div class="modal-images">
+       <img src="Big Bang Grilled Seaweed Hot & Spicy Flavour.jpeg">
+        <img src="17.jpg">
+    </div>
+
+    <h3>Big Bang Grilled Seaweed Hot & Spicy Flavour </h3>
+	<h4>Scientific name: <i>Pyropia yezoensis </i></h4> 
+	<p><strong>Common name:</strong>Nori seaweed </p> 
+	<p><strong>Ingredients:</strong></p> <ul> </li>Seaweed</li></p> 
+ <li>Grilled Spicy Flavour Seasoning</li>
+ <li>Smoked Flavour Powder </li>
+ <li>Hydrolyzed Soy Protein</li>
+ <li>Chili Powder</li>
+  <li>Flavour Enhancer</li>
+<li>Salt</li>
+<li>Sugar</li>
+	<p><strong>Producer:</strong>Taokaenoi Food & Marketing Public Company Limited</p> 
+	<p><strong>Benefits:</strong></p> <ul> 
+	<li>Provides a good amount of dietary fiber, which aids digestion, promotes gut health, and helps you feel full.</i>
+    <li>Contains beneficial omega-3 fatty acids and other compounds that support heart health by potentially lowering cholesterol and blood pressure.</li>
+    <li>Excellent source of iodine, which is vital for proper thyroid function and metabolism regulation.<l/i>
+	</ul>
+  </div>
+</div>
+
+
+<!-- MODAL 17-->
+<div class="modal" id="modal17">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('modal17')">×</span>
+
+    <div class="modal-images">
+        <img src="Fresh Black Fungus Mushroom.jpeg">
+        
+    </div>
+
+    <h3>Fresh Black Fungus Mushroom</h3>
+	<h4>Scientific name: <i>Auricularia polytricha</i></h4> 
+	<p><strong>Common name:</strong>Black Fungus Mushroom</p> 
+	<p><strong>Ingredients:</strong></p> <ul> </li>Pure black fungus mushroom 100%</li></p> 
+	<p><strong>Producer:</strong> Mx Fruit & Vegetable (M) Sdn. Bhd.</p> 
+	<p><strong>Benefits:</strong></p> <ul> 
+	<li>Packed with powerful antioxidants like polyphenols and flavonoids, which help combat oxidative stress in the body and may lower the risk of chronic diseases.</li>
+	<li>Improve blood circulation and help prevent blood platelet aggregation, leading to its traditional use as a "blood purifier" or tonic.</li>
+	<li>Offer protection for the liver from damage caused by certain substances and toxins, a benefit linked to its strong antioxidant properties.</li>
+	</ul>
+  </div>
+</div>
+
+	
+	
+
+    
+
+<script>
+function openModal(id) {
+  document.getElementById(id).style.display = "flex";
+}
+
+function closeModal(id) {
+  document.getElementById(id).style.display = "none";
+}
+</script>
+
+</body>
+</html>

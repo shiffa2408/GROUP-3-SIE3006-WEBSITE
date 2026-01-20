@@ -1,0 +1,1266 @@
+ <!DOCTYPE html> 
+ <html lang="en"> 
+ <head> <meta charset="UTF-8"> <title>Fieldtrip in Lenggeng</title> <style> body { margin: 0; font-family: Arial, sans-serif; background: #f4f4f4; } header { background: #1f3d2b; color: white; padding: 30px; text-align: center; } .plants { display: flex; flex-wrap: wrap; gap: 30px; padding: 60px; justify-content: center; } .plant-card { background: white; padding: 25px; border-radius: 15px; width: 22%; box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1); } .plant-card img { width: 100%; border-radius: 10px; margin-bottom: 15px; } .plant-card h3 { text-align: center; margin-bottom: 10px; color: #1f3d2b; } .plant-info p { font-size: 14px; margin: 6px 0; line-height: 1.5; } .plant-info span { font-weight: bold; color: #2f5d3a; } a { display: inline-block; margin-top: 30px; padding: 10px 25px; background: #2f5d3a; color: white; text-decoration: none; border-radius: 5px; }
+
+        /* ===== MULTI VIDEO HEADER ===== */
+        .video-header {
+            position: relative;
+            width: 100%;
+            height: 60vh;
+            overflow: hidden;
+            background: black; /* fallback for empty space */
+        }
+
+        .video-header video {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* show full video */
+            background: black;   /* fill empty space */
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .video-header video.active {
+            opacity: 1;
+        }
+
+        .video-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            z-index: 2;
+        }
+
+        .video-overlay h1 {
+            font-size: 42px;
+            margin: 0;
+        }
+
+        .video-overlay p {
+            margin-top: 10px;
+            font-size: 18px;
+        }
+
+        .video-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            font-size: 28px;
+            padding: 10px 16px;
+            cursor: pointer;
+            z-index: 3;
+            border-radius: 50%;
+        }
+
+        .video-btn:hover {
+            background: rgba(0,0,0,0.8);
+        }
+
+        .prev-btn { left: 20px; }
+        .next-btn { right: 20px; }
+
+        .mute-btn {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 3;
+        }
+
+        .mute-btn:hover {
+            background: rgba(0,0,0,0.8);
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>LENGGENG FIELDTRIP</h1>
+    <p>FIELDTRIP 2025</p>
+</header>
+
+<!-- ===== VIDEO HEADER ===== -->
+<div class="video-header">
+
+    <video class="active" autoplay muted loop playsinline>
+        <source src="video1.mp4" type="video/mp4">
+    </video>
+    <video autoplay muted loop playsinline>
+        <source src="video2.mp4" type="video/mp4">
+    </video>
+    <video autoplay muted loop playsinline>
+        <source src="video3.mp4" type="video/mp4">
+    </video>
+    <video autoplay muted loop playsinline>
+        <source src="video4.mp4" type="video/mp4">
+    </video>
+	<video autoplay muted loop playsinline>
+        <source src="video5.mp4" type="video/mp4">
+    </video>
+	<video autoplay muted loop playsinline>
+        <source src="video6.mp4" type="video/mp4">
+    </video>
+	<video autoplay muted loop playsinline>
+        <source src="video7.mp4" type="video/mp4">
+    </video>
+	<video autoplay muted loop playsinline>
+        <source src="video8.mp4" type="video/mp4">
+    </video>
+	<video autoplay muted loop playsinline>
+        <source src="video9.mp4" type="video/mp4">
+    </video>
+	
+
+    <!-- Overlay Text -->
+    <div class="video-overlay">
+        <h1>LENGGENG FIELDTRIP</h1>
+        <p>FIELDTRIP 2025</p>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <button class="video-btn prev-btn" onclick="prevVideo()">❮</button>
+    <button class="video-btn next-btn" onclick="nextVideo()">❯</button>
+
+    <!-- Mute/Unmute Button -->
+    <button class="mute-btn" onclick="toggleMute()">🔇</button>
+</div>
+
+<script>
+const videos = document.querySelectorAll(".video-header video");
+let index = 0;
+let isMuted = true; // videos start muted
+const muteBtn = document.querySelector(".mute-btn");
+
+function showVideo(i) {
+    videos.forEach(v => {
+        v.classList.remove("active");
+        v.pause();
+        v.currentTime = 0;
+    });
+
+    videos[i].classList.add("active");
+    videos[i].play();
+    updateMute();
+}
+
+function nextVideo() {
+    index = (index + 1) % videos.length;
+    showVideo(index);
+}
+
+function prevVideo() {
+    index = (index - 1 + videos.length) % videos.length;
+    showVideo(index);
+}
+
+// Auto change every 6 seconds
+setInterval(nextVideo, 6000);
+
+// Toggle Mute/Unmute
+function toggleMute() {
+    isMuted = !isMuted;
+    updateMute();
+}
+
+function updateMute() {
+    videos.forEach(v => v.muted = isMuted);
+    muteBtn.textContent = isMuted ? "🔇" : "🔊";
+}
+</script>
+
+</body>
+</html>
+
+
+
+
+<section class="plants">
+
+      <!-- pokok cili  -->
+    <div class="plant-card">
+        <img src="Capsicum frutescens.jpeg" alt="Curry Plant">
+        <h3> Cili padi</h3>
+
+        <div class="plant-info">
+            <p><span>Scientific Name:</span> <i>Capsicum frutescens</i></p>
+            <p><span>Common Name:</span> Cili padi</p>
+           
+            <p><span>Economic Value:</span> - Essential culinary spice widely used in Malaysian cuisine.</p>
+ <p>- Short growth cycle allows frequent harvesting and quick income.</p>
+<p>- Contains capsaicin with medicinal and preservative properties.</p>
+<p>-Market Value: RM3–5 per plant (≈ RM4)</p>
+            <p><span>Local Knowledge:</span> - Commonly recognised as an essential ingredient in daily local cuisine.
+- Traditionally believed to stimulate appetite and body warmth.
+- Used in household remedies for colds or muscle aches.
+- Sometimes planted around homes as a natural pest deterrent.</p>
+            <p><span>Number of Plants:</span> 34</p>
+            <p><span>Number of Fruit:</span> 25 </p>
+        </div>
+    </div>
+
+    <!-- CURRY PLANT -->
+    <div class="plant-card">
+        <img src="Murraya koenigii.jpeg" alt="Curry Plant">
+        <h3> Curry leaf plant</h3>
+
+        <div class="plant-info">
+            <p><span>Scientific Name:</span> <i>Murraya koenigii</i></p>
+            <p><span>Common Name:</span> Curry leaf plant</p>
+           
+            <p><span>Economic Value:</span> - Important culinary herb in traditional cooking.</p>
+<p>- Known for medicinal properties, including digestive benefits.</p>
+<p>- Low maintenance plant suitable for continuous household use.</p>
+<p>-Market Value:RM5–10 per plant (≈ RM7)</p>
+            <p><span>Local Knowledge:</span> - Traditionally used to flavour local dishes, especially curries.</p>
+<p>- Leaves believed in folk knowledge to aid digestion.</p>
+<p>- Sometimes used in home remedies for mild ailments like colds.</p>
+<p>- Cultivated near homes for easy access in daily cooking.</p>
+            <p><span>Number of Plants:</span> 17</p>
+            
+        </div>
+    </div>
+
+    <!-- BANANA PLANT -->
+    <div class="plant-card">
+        <img src="rumah 1 (17).jpeg" alt="Banana Plant">
+        <h3>Banana Plant</h3>
+
+        <div class="plant-info">
+            <p><span>Scientific Name:</span> <i>Musa</i> spp.</p>
+            <p><span>Common Name:</span> Pokok Pisang</p>
+            
+            <p><span>Economic Value:</span> - Important food crop providing carbohydrates and dietary fibre for households.</p>
+ <p>- Leaves and stems are used for traditional food wrapping and animal feed.</p>
+ <p>- Generates supplementary income through sale of fruits and banana-based products.</p>
+ <p>- Market Value:RM15–25 per mature plant (≈ RM20)</p>
+            <p><span>Local Knowledge:</span> - Known locally as a multipurpose plant used in daily life.
+- Leaves traditionally used for wrapping food and ritual purposes.
+- Banana flowers and shoots recognised as edible in local diets.</p>
+            <p><span>Number of Plants:</span> 53</p>
+        
+        </div>
+    </div>
+
+  
+	
+	<!-- SUGARCANE -->
+    <div class="plant-card">
+        <img src="Clitoria ternatea.jpeg" alt="Sugarcane Plant">
+        <h3>Pokok bunga biru</h3>
+
+        <div class="plant-info">
+            <p><span>Scientific Name:</span> <i>Clitoria ternatea</i></p>
+            <p><span>Common Name:</span> Pokok bunga biru</p>
+            
+            <p><span>Economic Value:</span> - Used as natural food colouring in rice and beverages.</p>
+<p>- Possesses medicinal properties, including antioxidant effects.</p>
+<p>- Cultivated as an ornamental and educational plant in home gardens.</p>
+<p>Market Value:RM5–10 per plant (≈ RM7)</p>
+            <p><span>Local Knowledge:</span> - Traditionally used to produce natural blue colouring for food and drinks.</p>
+<p>- Commonly brewed as herbal tea in local practices.</p>
+<p>- Associated with traditional remedies for eye and skin care.</p>
+<p>- Flowers used in cultural and household practices.</p>
+            <p><span>Number of Plants:</span> 1</p>
+            <p><span>Number of Flowers:</span> 5</p>
+        </div>
+    </div>
+	
+	<!-- SUGARCANE -->
+    <div class="plant-card">
+        <img src="Citrus microcarpa.jpeg" alt="Sugarcane Plant">
+        <h3>Pokok limau kasturi</h3>
+
+        <div class="plant-info">
+            <p><span>Scientific Name:</span> <i>Citrus microcarpa</i></p>
+            <p><span>Common Name:</span> Pokok limau kasturi</p>
+           
+            <p><span>Economic Value:</span> - Used extensively in food preparation and beverages.</p>
+<p>- Contains high vitamin C, contributing to nutritional and health benefits.</p>
+<p>- Frequently sold fresh, providing small-scale household income.</p>
+<p>-Market Value:RM2.50 - 4 per mature plant (≈ RM3)</p>
+
+            <p><span>Local Knowledge:</span> - Commonly used in daily cooking as a souring agent.</p>
+<p>- Traditionally used to reduce fishy odour in food preparation.</p>
+<p>- Juice used in home remedies for coughs and sore throat.</p>
+<p>- Associated with cleansing practices in households.</p>
+            <p><span>Number of Plants:</span> 10</p>
+    
+        </div>
+    </div>
+
+    <!-- COCONUT -->
+    <div class="plant-card">
+        <img src="Cocos nucifera.jpeg" alt="Coconut Plant">
+        <h3>Coconut Plant</h3>
+
+        <div class="plant-info">
+            <p><span>Scientific Name:</span> <i>Cocos nucifera</i></p>
+            <p><span>Common Name:</span> Pokok Kelapa</p>
+           
+            <p><span>Economic Value:</span> - Provides multiple products such as coconut water, flesh, oil and milk.</p>
+ <p>- Acts as a long-term income source due to continuous fruiting.</p>
+ <p>- By-products (husks, shells, leaves) are used for handicrafts and household tools.</p>
+ <p>-Market Value: RM30–50 per mature tree (≈ RM40)</p>
+            <p><span>Local Knowledge:</span> - Traditionally recognised as a plant where almost all parts can be used.
+- Coconut water consumed as a natural drink in daily life.
+- Leaves used for traditional weaving and ceremonial decorations.
+- Oil commonly used in traditional cooking and home remedies.</p>
+            <p><span>Number of Plants:</span> 37</p>
+			<p><span>Number of Fruits:</span> 25</p>
+        </div>
+    </div>
+	
+	<!-- SERAI -->
+    <div class="plant-card">
+        <img src="Manihot esculenta.jpeg" alt="Serai Plant">
+        <h3>Pucuk ubi pulut</h3>
+
+        <div class="plant-info">
+            <p><span>Scientific Name:</span> <i>Manihot esculenta</i></p>
+            <p><span>Common Name:</span> Pucuk ubi pulut</p>
+           
+            <p><span>Economic Value:</span> - Serves as an important staple food crop, providing carbohydrates and energy for household consumption.</p>
+<p>- Offers food security because it is hardy, drought-tolerant, and can be harvested when needed.</p>
+<p>- Generates economic value as the roots and leaves can be sold fresh or processed into flour, chips, or traditional foods.</p>
+            <p><span>Local Knowledge:</span> - Traditionally recognised as a staple food in rural communities.</p>
+  <p>- Leaves commonly cooked as a vegetable in local dishes.</p>
+  <p>- Known locally to require proper preparation before consumption.</p>
+  <p>- Tubers associated with food security during shortages.</p>
+            <p><span>Number of Plants:</span> 13</p>
+            
+        </div>
+    </div>
+
+    <!-- SERAI -->
+    <div class="plant-card">
+        <img src="Cymbopogon citratus.jpeg" alt="Serai Plant">
+        <h3>Serai Plant</h3>
+
+        <div class="plant-info">
+            <p><span>Scientific Name:</span> <i>Cymbopogon citratus</i></p>
+            <p><span>Common Name:</span> Lemongrass</p>
+            
+            <p><span>Economic Value:</span> - Used as a culinary herb and flavour enhancer.</p>
+<p>- Contains essential oils with medicinal and antimicrobial properties.</p>
+<p>- Commonly sold in bundles, contributing to daily household earnings.</p>
+<p>-Market Value:RM2–3 per clump (≈ RM2.50)</p>
+            <p><span>Local Knowledge:</span> - Traditionally used to add aroma and flavour to local dishes.</p>
+<p>- Believed in local knowledge to help relieve digestive discomfort.</p>
+<p>- Leaves sometimes used in herbal teas for relaxation.</p>
+<p>- Occasionally used in folk practices to repel insects.</p>
+            <p><span>Number of Plants:</span> 247</p>
+            
+        </div>
+    </div>
+
+    <!-- UBI -->
+    <div class="plant-card">
+        <img src="Pandanus amaryllifolius.jpeg" alt="Ubi Plant">
+        <h3>Pokok pandan</h3>
+
+        <div class="plant-info">
+            <p><span>Scientific Name:</span> <i>Pandanus amaryllifolius</i></p>
+            <p><span>Common Name:</span> Pokok pandan</p>
+           
+            <p><span>Economic Value:</span> - Widely used as a natural flavouring agent in traditional dishes.</p>
+<p>- Easy to propagate, making it suitable for home cultivation.</p>
+<p>- Provides additional income through local market sales.</p>
+<p>-Market Value:RM5–8 per plant (≈ RM6)</p>
+            <p><span>Local Knowledge:</span> - Traditionally used to impart fragrance to food and drinks.</p>
+<p>- Leaves commonly used as natural flavouring in cooking.</p>
+<p>- Associated with household practices to freshen indoor spaces.</p>
+<p>- Sometimes used in traditional remedies for calming effects.</p>
+            <p><span>Number of Plants:</span> 4</p>
+            
+        </div>
+    </div>
+	
+	<div class="plant-card">
+        <img src="Lansium parasiticum.jpeg" alt="Ubi Plant">
+        <h3>Langsat, buah duku</h3>
+
+        <div class="plant-info">
+            <p><span>Scientific Name:</span> <i>Lansium parasiticum</i></p>
+            <p><span>Common Name:</span> Langsat, buah duku</p>
+            
+            <p><span>Economic Value:</span> - Produces seasonal fruits consumed fresh.</p>
+ <p>- Has commercial value during fruiting season.</p>
+ <p>- Trees contribute to home garden diversity and shade.</p>
+ <p>-Market Value:RM30–50 per tree (≈ RM40)</p>
+            <p><span>Local Knowledge:</span> - Traditionally valued as a seasonal fruit in local diets.</p>
+<p>- Fruits commonly eaten fresh or shared during social gatherings.</p>
+<p>- Seeds sometimes used in folk remedies for mild digestive issues.</p>
+<p>- Tree often integrated into home gardens for shade and fruit supply.</p>
+            <p><span>Number of Plants:</span> 9</p>
+            
+        </div>
+    </div>
+	
+	<div class="plant-card">
+        <img src="codiaeum variegatum.jpeg" alt="Ubi Plant">
+        <h3>Puding</h3>
+
+        <div class="plant-info">
+            <p><span>Scientific Name:</span> <i>Codiaeum variegatum</i></p>
+            <p><span>Common Name:</span> Puding</p>
+            
+            <p><span>Economic Value:</span> - </p>
+            <p><span>Local Knowledge:</span>- Traditionally used as an ornamental plant in gardens and homes.</p>
+  <p>- Leaves sometimes used in local cultural or ritual decorations.</p>
+  <p>- Believed in folk practices to bring vibrancy and positive energy to spaces.</p>
+  <p>- Occasionally used in traditional remedies, though with caution due to toxicity.</p>
+            <p><span>Number of Plants:</span> 4</p>
+            
+        </div>
+    </div>
+	
+	<div class="plant-card">
+        <img src="Psophocarpus tetragonolobus.jpeg" alt="Ubi Plant">
+        <h3>Kacang botol</h3>
+
+        <div class="plant-info">
+            <p><span>Scientific Name:</span> <i>Psophocarpus tetragonolobus</i></p>
+            <p><span>Common Name:</span>Kacang botol</p>
+           
+            <p><span>Economic Value:</span> - Almost all plant parts are edible and nutritious.</p>
+<p>-Provides protein-rich food for households.</p>
+<p>-Suitable for small-scale cultivation, reducing food expenses</p>
+            <p><span>Local Knowledge:</span>- Traditionally used as a vegetable in local diets.</p>
+<p>- Leaves, pods, and flowers commonly cooked in home dishes.</p>
+<p>- Recognised in local knowledge for its high nutritional value.</p>
+<p>- Sometimes used in home gardens as a climbing plant for shade and soil enrichment.</p>
+            <p><span>Number of Plants:</span> 1</p>
+            
+        </div>
+    </div>
+	
+	<div class="plant-card">
+        <img src="Mangifera indica.jpeg" alt="Ubi Plant">
+        <h3>Manga</h3>
+
+        <div class="plant-info">
+            <p><span>Scientific Name:</span> <i>Mangifera indica</i></p>
+            <p><span>Common Name:</span> Manga</p>
+            
+            <p><span>Economic Value:</span> Popular fruit crop with high consumer demand.</p>
+<p>-Fruits can be sold fresh or processed, increasing economic returns.</p>
+<p>-Mature trees provide shade and long-term yield.</p>
+            <p><span>Local Knowledge:</span>- Traditionally eaten fresh or used in local dishes like pickles and chutneys.</p>
+<p>- Leaves and bark sometimes used in folk remedies for fever or wounds.</p>
+<p>-Associated with cultural practices, such as planting for shade and fruit sharing.</p>
+<p>-Unripe fruits used in local culinary practices for sour flavoring.</p>
+            <p><span>Number of Plants:</span> 3</p>
+            
+        </div>
+    </div>
+	
+	
+	
+	
+	<div class="plant-card">
+        <img src="Garcinia mangostana.jpeg" alt="Ubi Plant">
+        <h3>Langsat</h3>
+
+        <div class="plant-info">
+            <p><span>Scientific Name:</span> <i>Garcinia mangostana</i></p>
+            <p><span>Common Name:</span>Langsat</p>
+            
+            <p><span>Economic Value:</span>-Produces high-value fruits with strong market demand.</p>
+
+<p>-Contributes significantly to seasonal household income.</p>
+
+<p>-Known for health-promoting properties due to antioxidants.</p>
+            <p><span>Local Knowledge:</span>- Traditionally eaten fresh as a seasonal fruit.</p>
+
+<p>- Rind sometimes used in folk remedies for skin ailments and diarrhea.</p>
+
+<p>- Associated with cultural practices of sharing fruit during gatherings.</p>
+
+<p>- Tree often grown in home gardens for shade and fruit supply.</p>
+            <p><span>Number of Plants:</span> 3</p>
+            
+        </div>
+    </div>
+	
+	<div class="plant-card">
+        <img src="Nephelium ramboutan-ake.jpeg" alt="Ubi Plant">
+        <h3>pulasan</h3>
+
+        <div class="plant-info">
+            <p><span>Scientific Name:</span> <i>Nephelium ramboutan-ake</i></p>
+            <p><span>Common Name:</span>pulasan</p>
+            
+            <p><span>Economic Value:</span>-Popular fresh fruit enjoyed locally.</p>
+
+<p>-Provides income during peak fruiting seasons.</p>
+
+-Encourages diversified home garden systems.</p>
+            <p><span>Local Knowledge:</span>-Traditionally consumed fresh as a sweet seasonal fruit.</p>
+
+- <p>-Seeds sometimes used in folk remedies after proper preparation.</p>
+
+-<p>- Tree commonly planted in home gardens for fruit and shade.</p>
+
+- <p>-Fruit sharing is part of local social and cultural practices.</p>
+            <p><span>Number of Plants:</span> 3</p>
+            
+        </div>
+    </div>
+	
+	<div class="plant-card">
+        <img src="Durio zibethinus.jpeg" alt="Ubi Plant">
+        <h3>durian</h3>
+
+        <div class="plant-info">
+            <p><span>Scientific Name:</span> <i>Durio zibethinus</i></p>
+            <p><span>Common Name:</span>durian</p>
+            
+            <p><span>Economic Value:</span>-One of the highest-value fruit crops in Malaysia.</p>
+
+ <p>-Generates substantial seasonal income.</p>
+
+ <p>-Supports local fruit trade and agro-economy.</p>
+            <p><span>Local Knowledge:</span>- Traditionally eaten fresh as a prized seasonal fruit.</p>
+
+<p>- Recognised locally for its strong aroma and unique taste.</p>
+
+<p>- Seeds sometimes boiled or roasted for consumption in folk practices.</p>
+
+<p>- Trees often planted in home gardens for fruit sharing and shade.</p>
+            <p><span>Number of Plants:</span> 5</p>
+            
+        </div>
+    </div>
+	
+	<div class="plant-card">
+        <img src="Archidendron pauciflorum.jpeg" alt="Ubi Plant">
+        <h3>jering</h3>
+
+        <div class="plant-info">
+            <p><span>Scientific Name:</span> <i>Archidendron pauciflorum</i></p>
+            <p><span>Common Name:</span>jering</p>
+            
+            <p><span>Economic Value:</span>-Consumed as a traditional vegetable.</p>
+
+ <p>-Has strong market demand despite seasonal availability.</p>
+
+ <p>-Trees are long-lived, providing repeated harvests.</p>
+            <p><span>Local Knowledge:</span>- Traditionally eaten as a vegetable, often in sambal or stir-fry dishes.</p>
+
+<p>- Seeds believed in local knowledge to have mild medicinal properties.</p>
+
+<p>- Often planted near homes for easy access to fresh pods.</p>
+
+<p>- Associated with local culinary culture despite its strong odor.</p>
+            <p><span>Number of Plants:</span> 3</p>
+            
+        </div>
+    </div>
+	
+	<div class="plant-card">
+        <img src="etlingera elatior.jpeg" alt="Ubi Plant">
+        <h3>Ginger</h3>
+
+        <div class="plant-info">
+            <p><span>Scientific Name:</span> <i>Etlingera elatior</i></p>
+            <p><span>Common Name:</span>Ginger</p>
+           
+            <p><span>Economic Value:</span>Used as food ingredient in traditional dishes.</p>
+
+ <p>-Flowers are sold fresh, generating supplementary income.</p>
+
+ <p>-Also valued as an ornamental landscape plant.</p>
+            <p><span>Local Knowledge:</span>- Traditionally used in local cuisine to add aroma and flavor, especially in laksa.</p>
+
+ <p>- Flowers sometimes used in folk remedies for digestive health.</p>
+
+ <p>- Cultivated in home gardens for culinary and ornamental purposes.</p>
+
+ <p>- Associated with cultural practices and traditional cooking rituals.</p>
+            <p><span>Number of Plants:</span> 1</p>
+            
+        </div>
+    </div>
+	
+	<div class="plant-card">
+        <img src="Phaleria macrocarpa.jpeg" alt="Ubi Plant">
+        <h3>mahkota dewa</h3>
+
+        <div class="plant-info">
+            <p><span>Scientific Name:</span> <i>Phaleria macrocarpa</i></p>
+            <p><span>Common Name:</span>mahkota dewa</p>
+           
+            <p><span>Economic Value:</span>Widely known as a medicinal plant.</p>
+
+ <p>-Fruits are processed into traditional health products.</p>
+
+ <p>-Cultivated for herbal trade and personal use.</p>
+            <p><span>Local Knowledge:</span>- Traditionally recognised in local knowledge for its medicinal properties.</p>
+
+<p>- Fruit, seeds, and bark used in folk remedies for blood sugar and general health.</p>
+
+<p>- Often used in herbal preparations rather than daily food.</p>
+
+<p>- Cultivated more for traditional medicine than culinary use.</p>
+            <p><span>Number of Plants:</span> 1</p>
+            
+        </div>
+    </div>
+	
+	<div class="plant-card">
+        <img src="Averrhoa bilimbi.jpeg" alt="Ubi Plant">
+        <h3>belimbing</h3>
+
+        <div class="plant-info">
+            <p><span>Scientific Name:</span> <i>Averrhoa bilimbi</i></p>
+            <p><span>Common Name:</span>belimbing</p>
+            
+            <p><span>Economic Value:</span>-Used as souring agent in cooking.</p>
+
+<p>-Has traditional medicinal uses.</p>
+
+<p>-Excess fruits can be sold or shared within community.</p>
+            <p><span>Local Knowledge:</span>- Traditionally used in local cooking as a souring agent.</p>
+
+ <p>- Juice believed in folk remedies to help lower blood pressure and treat skin issues.</p>
+
+ <p>- Leaves sometimes used in home remedies for minor ailments.</p>
+
+ <p>- Trees commonly planted near homes for easy access to fruit.</p>
+            <p><span>Number of Plants:</span> 1</p>
+            
+        </div>
+    </div>
+	
+	<div class="plant-card">
+        <img src="Colocasia esculenta.jpeg" alt="Ubi Plant">
+        <h3>ubi</h3>
+
+        <div class="plant-info">
+            <p><span>Scientific Name:</span> <i>Colocasia esculenta</i></p>
+            <p><span>Common Name:</span>ubi</p>
+           
+            <p><span>Economic Value:</span>-Provides edible corms and leaves.</p>
+
+<p>-Acts as a subsistence food crop.</p>
+
+<p>-Easy to grow in home gardens, enhancing food resilience.</p>
+            <p><span>Local Knowledge:</span>- Traditionally used as a staple or side dish in local cuisine.</p>
+
+<p>- Corms and leaves commonly cooked in soups, stews, or as vegetables.</p>
+
+<p>- Recognised in local knowledge to require proper cooking to remove toxins.</p>
+
+<p>- Sometimes used in folk remedies for digestive health.</p>
+            <p><span>Number of Plants:</span> 4</p>
+            
+        </div>
+    </div>
+	
+	
+	
+	
+	<div class="plant-card">
+        <img src="Piper betle.jpeg" alt="Ubi Plant">
+        <h3>daun sirih</h3>
+
+        <div class="plant-info">
+            <p><span>Scientific Name:</span> <i>Piper betle</i></p>
+            <p><span>Common Name:</span>daun sirih</p>
+           
+            <p><span>Economic Value:</span>-Used in traditional customs and medicine.</p>
+
+ <p>-Leaves have antimicrobial properties.</p>
+
+ <p>-Provides income through local leaf sales.</p>
+            <p><span>Local Knowledge:</span>- Traditionally used in chewing practices with areca nut (sireh).</p>
+
+<p>- Leaves believed in local knowledge to have medicinal properties for mouth and digestive health.</p>
+
+<p>- Commonly used in cultural and ceremonial rituals.</p>
+
+<p>- Sometimes used in folk remedies for minor wounds and infections.</p>
+            <p><span>Number of Plants:</span> 3</p>
+       
+        </div>
+    </div>
+	
+	<div class="plant-card">
+        <img src="Nephelium lappaceum.jpeg" alt="Ubi Plant">
+        <h3>rambutan</h3>
+
+        <div class="plant-info">
+            <p><span>Scientific Name:</span> <i>Nephelium lappaceum</i></p>
+            <p><span>Common Name:</span>rambutan</p>
+           
+            <p><span>Economic Value:</span>-Popular fresh fruit enjoyed locally.</p>
+
+<p>-Provides income during peak fruiting seasons.</p>
+
+<p>-Encourages diversified home garden systems.</p>
+            <p><span>Local Knowledge:</span>- Traditionally eaten fresh as a sweet seasonal fruit.</p>
+
+<p>- Seeds sometimes used in folk remedies after proper preparation.</p>
+
+<p>- Trees commonly planted in home gardens for fruit and shade.</p>
+
+<p>- Fruit sharing is part of local social and cultural practices.</p>
+            <p><span>Number of Plants:</span> 10</p>
+       
+        </div>
+    </div>
+	
+	<div class="plant-card">
+        <img src="Syzygium aqueum.jpeg" alt="Ubi Plant">
+        <h3>jambu air</h3>
+
+        <div class="plant-info">
+            <p><span>Scientific Name:</span> <i>Syzygium aqueum</i></p>
+            <p><span>Common Name:</span>jambu air</p>
+          
+            <p><span>Economic Value:</span>-Consumed as fresh fruit.</p>
+
+<p>-Contributes to household nutrition.</p>
+
+<p>-Fruits can be sold locally for income.</p>
+            <p><span>Local Knowledge:</span>- Traditionally eaten fresh as a refreshing fruit.</p>
+
+<p>- Leaves and bark sometimes used in folk remedies for minor ailments.</p>
+
+<p>- Trees commonly planted near homes for fruit and shade.</p>
+
+<p>- Fruit often shared in local social and cultural practices.</p>
+            <p><span>Number of Plants:</span> 4</p>
+       
+        </div>
+    </div>
+	
+	
+	<div class="plant-card">
+        <img src="Ixora coccinea .jpeg" alt="Ubi Plant">
+        <h3>Bunga Jejarum</h3>
+
+        <div class="plant-info">
+            <p><span>Scientific Name:</span> <i>Ixora coccinea</i></p>
+            <p><span>Common Name:</span>Bunga Jejarum</p>
+           
+            <p><span>Economic Value:</span>-Popular ornamental flowering plant.</p>
+
+<p>-Used in landscaping and cultural decoration.</p>
+
+<p>-Can be propagated and sold as potted plants.</p>
+            <p><span>Local Knowledge:</span>- Traditionally used as an ornamental plant in gardens and around homes.</p>
+
+ <p>- Flowers sometimes used in local cultural or ritual decorations.</p>
+
+ <p>- Recognised in folk knowledge for symbolic and aesthetic purposes.</p>
+
+ <p>- Occasionally used in traditional remedies, though mainly for decorative use.</p>
+            <p><span>Number of Plants:</span> 1</p>
+       
+        </div>
+    </div>
+	
+	<div class="plant-card">
+        <img src="Ananas comosus.jpeg" alt="Ubi Plant">
+        <h3>nanas</h3>
+
+        <div class="plant-info">
+            <p><span>Scientific Name:</span> <i>Ananas comosus</i></p>
+            <p><span>Common Name:</span>nanas</p>
+           
+            <p><span>Economic Value:</span>-Important commercial fruit crop.</p>
+
+<p>-Can be processed into juices and preserves.</p>
+
+<p>-Provides short-term income due to fast growth</p>
+            <p><span>Local Knowledge:</span>- Traditionally eaten fresh or used in local dishes and beverages.</p>
+
+<p>- Leaves sometimes used in folk remedies for wound care or inflammation.</p>
+
+<p>- Recognised in local knowledge for its digestive benefits.</p>
+
+<p>- Often planted in home gardens for easy access to fruit.</p>
+            <p><span>Number of Plants:</span> 1</p>
+       
+        </div>
+    </div>
+	
+	<div class="plant-card">
+        <img src="Bougainvillea spp.jpeg" alt="Ubi Plant">
+        <h3>Bunga Kertas</h3>
+
+        <div class="plant-info">
+            <p><span>Scientific Name:</span> <i>Bougainvillea spp.</i></p>
+            <p><span>Common Name:</span>Bunga Kertas</p>
+           
+            <p><span>Economic Value:</span>-Widely used as ornamental and fencing plant.</p>
+
+<p>-Low maintenance, suitable for landscaping.</p>
+
+<p>-Has commercial value in the nursery trade.</p>
+            <p><span>Local Knowledge:</span>- Traditionally used as an ornamental plant in gardens and homes.</p>
+
+<p>- Flowers sometimes used in local decorations and cultural displays.</p>
+
+<p>- Recognised in folk knowledge for bright colors symbolising vibrancy.</p>
+
+<p>- Occasionally used in traditional remedies, though mainly decorative.</p>
+            <p><span>Number of Plants:</span> 5</p>
+       
+        </div>
+    </div>
+	
+	<div class="plant-card">
+        <img src="Citrus aurantiifolia.jpeg" alt="Ubi Plant">
+        <h3>Limau Nipis </h3>
+
+        <div class="plant-info">
+            <p><span>Scientific Name:</span> <i>Citrus aurantiifolia</i></p>
+            <p><span>Common Name:</span>Limau Nipis</p>
+           
+            <p><span>Economic Value:</span>-Used in food and beverages.</p>
+
+<p>-Valued for medicinal and cleansing uses.</p>
+
+<p>-Sold fresh in markets for income.</p>
+            <p><span>Local Knowledge:</span>- Traditionally used in cooking and as a souring agent.</p>
+
+<p>- Juice believed in local knowledge to help with digestion and treat minor ailments like colds.</p>
+
+<p>- Leaves sometimes used in folk remedies for skin care.</p>
+
+<p>- Commonly planted near homes for easy access in daily use.</p>
+            <p><span>Number of Plants:</span> 1</p>
+       
+        </div>
+    </div>
+	
+	<div class="plant-card">
+        <img src="Hibiscus rosa-sinensis.jpeg" alt="Ubi Plant">
+        <h3>Bunga Raya </h3>
+
+        <div class="plant-info">
+            <p><span>Scientific Name:</span> <i>Hibiscus rosa-sinensis</i></p>
+            <p><span>Common Name:</span>Bunga Raya</p>
+            
+            <p><span>Economic Value:</span>-Popular ornamental flowering plant.</p>
+
+ <p>-National flower, increasing cultural value.</p>
+
+ <p>-Used in traditional hair and herbal preparations.</p>
+            <p><span>Local Knowledge:</span>- Traditionally used as an ornamental plant in gardens and homes.</p>
+
+ <p>- Flowers sometimes used in local remedies for hair care and skin health.</p>
+
+ <p>- Recognised in folk knowledge for symbolic and cultural significance.</p>
+
+ <p>- Occasionally used in teas or infusions for mild health benefits.</p>
+            <p><span>Number of Plants:</span> 10</p>
+       
+        </div>
+    </div>
+	
+	<div class="plant-card">
+        <img src="curcuma longa.jpeg" alt="Ubi Plant">
+        <h3>Kunyit </h3>
+
+        <div class="plant-info">
+            <p><span>Scientific Name:</span> <i>Curcuma longa</i></p>
+            <p><span>Common Name:</span>Kunyit</p>
+          
+            <p><span>Economic Value:</span>-Important culinary spice.</p>
+
+<p>-Possesses strong medicinal properties.</p>
+
+<p>-Can be processed into powder for sale.</p>
+            <p><span>Local Knowledge:</span>- Traditionally used in cooking as a spice and natural colorant.</p>
+
+<p>- Rhizomes widely recognised in local knowledge for medicinal purposes, including anti-inflammatory and wound healing.</p>
+
+<p>- Used in folk remedies for digestive issues and skin care.</p>
+
+<p>- Often incorporated in cultural rituals and traditional ceremonies.</p>
+            <p><span>Number of Plants:</span> 6</p>
+       
+        </div>
+    </div>
+	
+	<div class="plant-card">
+        <img src="Coleus scutellarioides.jpeg" alt="Ubi Plant">
+        <h3>Pokok Ati-ati</h3>
+
+        <div class="plant-info">
+            <p><span>Scientific Name:</span> <i>Coleus scutellarioides</i></p>
+            <p><span>Common Name:</span>Pokok Ati-ati</p>
+          
+            <p><span>Economic Value:</span>-Grown for decorative foliage.</p>
+
+ <p>-Enhances garden aesthetics.</p>
+
+ <p>-Easily propagated for small-scale sales.</p>
+            <p><span>Local Knowledge:</span>- Traditionally used as an ornamental plant for its colorful foliage.</p>
+
+<p>- Recognised in local knowledge mainly for decorative and aesthetic purposes.</p>
+
+<p>- Sometimes planted in gardens to brighten surroundings.</p>
+
+<p>- Occasionally used in folk practices, though not for food or medicine.</p>
+            <p><span>Number of Plants:</span> 15</p>
+       
+        </div>
+    </div>
+	
+	<div class="plant-card">
+        <img src="Artocarpus heterophyllus.jpeg" alt="Ubi Plant">
+        <h3>Pokok Nangka</h3>
+
+        <div class="plant-info">
+            <p><span>Scientific Name:</span> <i>Artocarpus heterophyllus</i></p>
+            <p><span>Common Name:</span>Pokok Nangka</p>
+           
+            <p><span>Economic Value:</span>-Provides large yields per harvest.</p>
+
+ <p>-Fruits used fresh and cooked.</p>
+
+ <p>-Generates income from fruit and processed products.</p>
+            <p><span>Local Knowledge:</span>- Traditionally eaten fresh or cooked in local dishes.</p>
+
+<p>- Seeds sometimes boiled or roasted and consumed as snacks.</p>
+
+<p>- Leaves and wood occasionally used in folk practices or household applications.</p>
+
+<p>- Trees commonly planted near homes for fruit and shade.</p>
+            <p><span>Number of Plants:</span> 1</p>
+       
+        </div>
+    </div>
+	
+	<div class="plant-card">
+        <img src="Ziziphus mauritiana.jpeg" alt="Ubi Plant">
+        <h3>Bidara</h3>
+
+        <div class="plant-info">
+            <p><span>Scientific Name:</span> <i>Ziziphus mauritiana</i></p>
+            <p><span>Common Name:</span>Bidara</p>
+          
+            <p><span>Economic Value:</span>-Fruits consumed fresh or dried.</p>
+
+<p>-Leaves used in traditional medicine.</p>
+
+<p>-Cultivated for cultural and medicinal purposes.</p>
+            <p><span>Local Knowledge:</span>- Traditionally eaten fresh or dried as a fruit snack.</p>
+
+<p>- Recognised in local knowledge for mild medicinal uses, such as aiding digestion.</p>
+
+<p>- Leaves and seeds sometimes used in folk remedies for minor ailments.</p>
+
+<p>- Trees often planted near homes for fruit and shade.</p>
+            <p><span>Number of Plants:</span> 2</p>
+       
+        </div>
+    </div>
+	
+	<div class="plant-card">
+        <img src="Saccharum officinarum.jpeg" alt="Ubi Plant">
+        <h3>Tebu</h3>
+
+        <div class="plant-info">
+            <p><span>Scientific Name:</span> <i>Saccharum officinarum</i></p>
+            <p><span>Common Name:</span>Tebu</p>
+         
+            <p><span>Economic Value:</span>-Source of natural sugar and juice.</p>
+
+ <p>-Sold fresh as juice or stalks.</p>
+
+ <p>-Provides quick returns due to fast growth.</p>
+            <p><span>Local Knowledge:</span>- Traditionally used in local cuisine to add aroma and flavor, especially in laksa.</p>
+
+  <p>- Flowers sometimes used in folk remedies for digestive health.</p>
+
+  <p>- Cultivated in home gardens for culinary and ornamental purposes.</p>
+
+  <p>- Associated with cultural practices and traditional cooking rituals.</p>
+            <p><span>Number of Plants:</span> 20+</p>
+       
+        </div>
+    </div>
+	
+	<div class="plant-card">
+        <img src="Carica papaya.jpeg" alt="Ubi Plant">
+        <h3>Betik</h3>
+
+        <div class="plant-info">
+            <p><span>Scientific Name:</span> <i>Carica papaya</i></p>
+            <p><span>Common Name:</span>Betik</p>
+          
+            <p><span>Economic Value:</span>-Fruits consumed ripe or unripe.</p>
+
+ <p>-Contains enzymes with digestive benefits.</p>
+
+ <p>-Suitable for short-term household income.</p>
+            <p><span>Local Knowledge:</span>- Traditionally eaten fresh or used in local dishes and desserts.</p>
+
+<p>- Leaves and unripe fruit sometimes used in folk remedies for digestive and skin issues.</p>
+
+<p>- Seeds occasionally used in traditional medicine for deworming.</p>
+
+<p>- Trees commonly planted near homes for easy access to fruit.</p>
+            <p><span>Number of Plants:</span> 2</p>
+       
+        </div>
+    </div>
+	
+	<div class="plant-card">
+        <img src="Hylocereus polyrhizus.jpeg" alt="Ubi Plant">
+        <h3>Buah Naga Merah</h3>
+
+        <div class="plant-info">
+            <p><span>Scientific Name:</span> <i>Hylocereus polyrhizus</i></p>
+            <p><span>Common Name:</span>Buah Naga Merah</p>
+        
+            <p><span>Economic Value:</span>-High-value commercial fruit.</p>
+
+<p>-Strong market demand due to health benefits.</p>
+
+<p>-Generates good returns in small cultivation areas</p>
+            <p><span>Local Knowledge:</span>- Traditionally eaten fresh as a refreshing fruit.</p>
+
+<p>- Recognised in local knowledge for its cooling properties and health benefits.</p>
+
+<p>- Sometimes planted in home gardens for fruit and ornamental value.</p>
+
+<p>- Fruit occasionally used in folk remedies for digestion and hydration.</p>
+            <p><span>Number of Plants:</span> 1</p>
+       
+        </div>
+    </div>
+	
+	<div class="plant-card">
+        <img src="Schefflera actinophylla.jpeg" alt="Ubi Plant">
+        <h3>Pokok Payung</h3>
+
+        <div class="plant-info">
+            <p><span>Scientific Name:</span> <i>Schefflera actinophylla</i></p>
+            <p><span>Common Name:</span>Pokok Payung</p>
+           
+            <p><span>Economic Value:</span>-Used as ornamental and shade plant.</p>
+
+<p>-Improves microclimate around houses.</p>
+
+<p>-Has nursery and landscaping value.</p>
+            <p><span>Local Knowledge:</span>- Traditionally eaten fresh as a refreshing fruit.</p>
+
+<p>- Recognised in local knowledge for its cooling properties and health benefits.</p>
+
+<p>- Sometimes planted in home gardens for fruit and ornamental value.</p>
+
+<p>- Fruit occasionally used in folk remedies for digestion and hydration.</p>
+            <p><span>Number of Plants:</span> 1</p>
+       
+        </div>
+    </div>
+	
+	<div class="plant-card">
+        <img src="Allamanda cathartica.jpeg" alt="Ubi Plant">
+        <h3>Bunga Emas</h3>
+
+        <div class="plant-info">
+            <p><span>Scientific Name:</span> <i>Allamanda cathartica</i></p>
+            <p><span>Common Name:</span>Bunga Emas</p>
+            
+            <p><span>Economic Value:</span>-Ornamental flowering climber.</p>
+
+<p>-Enhances aesthetic appeal of gardens.</p>
+
+<p>-Widely used in landscaping projects.</p>
+            <p><span>Local Knowledge:</span>- Traditionally used as an ornamental plant for bright yellow flowers.</p>
+
+<p>- Recognised in local knowledge mainly for decorative and aesthetic purposes.</p>
+
+<p>- Sometimes planted in gardens and public spaces to enhance visual appeal.</p>
+
+<p>- Occasionally mentioned in folk practices, but not used for food or medicine.</p>
+            <p><span>Number of Plants:</span> 11</p>
+       
+        </div>
+    </div>
+	
+	<div class="plant-card">
+        <img src="Sapindus mukorossi.jpeg" alt="Ubi Plant">
+        <h3>Sabun India</h3>
+
+        <div class="plant-info">
+            <p><span>Scientific Name:</span> <i>Sapindus mukorossi</i></p>
+            <p><span>Common Name:</span>Sabun India</p>
+           
+            <p><span>Economic Value:</span>-Produces natural soap-like compounds.</p>
+
+<p>-Used as eco-friendly detergent.</p>
+
+<p>-Has medicinal and niche market value.</p>
+            <p><span>Local Knowledge:</span>- Traditionally used as a natural soap for washing clothes and cleaning.</p>
+
+<p>- Recognised in local knowledge for its cleansing and foaming properties.</p>
+
+<p>- Sometimes used in folk remedies for skin care.</p>
+
+<p>- Seeds occasionally used in traditional practices for household purposes.</p>
+            <p><span>Number of Plants:</span> 1</p>
+       
+        </div>
+    </div>
+	
+	<div class="plant-card">
+        <img src="aloe vera.jpg" alt="Ubi Plant">
+        <h3>Lidah Buaya </h3>
+
+        <div class="plant-info">
+            <p><span>Scientific Name:</span> <i>Aloe vera</i></p>
+            <p><span>Common Name:</span>Lidah Buaya</p>
+           
+            <p><span>Economic Value:</span>-Used in traditional medicine and cosmetics.</p>
+
+<p>-Contains soothing and healing properties.</p>
+
+<p>-Easily sold as potted or raw plant material.</p>
+            <p><span>Local Knowledge:</span>- Traditionally used in local knowledge for skin care and wound healing.</p>
+
+ <p>- Gel applied to burns, cuts, and rashes for soothing effects.</p>
+
+ <p>- Sometimes consumed in drinks for digestive health.</p>
+
+ <p>- Commonly planted near homes for easy access to medicinal use.</p>
+            <p><span>Number of Plants:</span> 1</p>
+       
+        </div>
+    </div>
+	
+	<div class="plant-card">
+        <img src="Eurycoma longifolia.jpeg" alt="Ubi Plant">
+        <h3>Tongkat Ali</h3>
+
+        <div class="plant-info">
+            <p><span>Scientific Name:</span> <i>Eurycoma longifolia</i></p>
+            <p><span>Common Name:</span>Tongkat Ali</p>
+          
+            <p><span>Economic Value:</span>-Important medicinal plant in Malaysia.</p>
+
+<p>-Roots used in herbal supplements.</p>
+
+<p>-High market demand increases economic value</p>
+            <p><span>Local Knowledge:</span>- Traditionally recognised in local knowledge as an herbal remedy for vitality and male health.</p>
+
+<p>- Roots used in folk medicine to boost energy and stamina.</p>
+
+<p>- Sometimes consumed as a tonic or decoction for general well-being.</p>
+
+<p>- Cultivated more for medicinal purposes than culinary use.</p>
+            <p><span>Number of Plants:</span> 1</p>
+       
+        </div>
+    </div>
+	
+	<div class="plant-card">
+        <img src="Bambusa spp..jpeg" alt="Ubi Plant">
+        <h3>Buluh</h3>
+
+        <div class="plant-info">
+            <p><span>Scientific Name:</span> <i>Bambusa spp.</i></p>
+            <p><span>Common Name:</span>Buluh</p>
+           
+            <p><span>Economic Value:</span>-Used in construction and handicrafts.</p>
+
+<p>-Functions as fencing and erosion control.</p>
+
+<p>-Provides long-term economic benefits.</p>
+            <p><span>Local Knowledge:</span>- Traditionally used in local knowledge for construction, tools, and handicrafts.</p>
+
+<p>- Young shoots consumed as vegetables in some communities.</p>
+
+<p>- Leaves and stems sometimes used in traditional medicine or for animal fodder.</p>
+
+<p>- Often planted near homes for practical and cultural purposes.</p>
+            <p><span>Number of Plants:</span> 45</p>
+       
+        </div>
+    </div>
+	
+	<div class="plant-card">
+        <img src="Averrhoa carambola1.jpeg" alt="Ubi Plant">
+        <h3>Belimbing</h3>
+
+        <div class="plant-info">
+            <p><span>Scientific Name:</span> <i>Averrhoa carambola</i></p>
+            <p><span>Common Name:</span>Belimbing</p>
+           
+            <p><span>Economic Value:</span>-Produces edible fruits that are consumed fresh or used in juices and food products.</p>
+
+<p>-Provides supplementary household income through sale of fruits in local markets.</p>
+
+<p>-Contributes to nutritional value, as the fruits are rich in vitamins and antioxidants.</p>
+            <p><span>Local Knowledge:</span>- Traditionally eaten fresh or used in local cooking for its sour flavor.</p>
+
+<p>- Juice sometimes used in folk remedies for digestion and minor ailments.</p>
+
+<p>- Leaves occasionally used in traditional medicine for skin care.</p>
+
+<p>- Trees commonly planted near homes for fruit and shade.</p>
+            <p><span>Number of Plants:</span> 6</p>
+       
+        </div>
+    </div>
+	
+	<div class="plant-card">
+        <img src="Manilkara zapota.jpeg" alt="Ubi Plant">
+        <h3>Sawo</h3>
+
+        <div class="plant-info">
+            <p><span>Scientific Name:</span> <i>Manilkara zapota</i></p>
+            <p><span>Common Name:</span>Sawo</p>
+           
+            <p><span>Economic Value:</span>-Produces sweet edible fruits that are consumed fresh.</p>
+
+<p>-Provides supplementary income when fruits are sold locally during fruiting seasons.</p>
+
+<p>-Functions as a long-term fruit tree, offering repeated harvests with minimal maintenance.</p>
+            <p><span>Local Knowledge:</span>- Traditionally eaten fresh as a sweet seasonal fruit.</p>
+
+<p>- Seeds sometimes used in folk remedies after proper preparation.</p>
+
+<p>- Trees commonly planted near homes for fruit and shade.</p>
+
+<p>- Fruit sharing is part of local social and cultural practices.</p>
+            <p><span>Number of Plants:</span> 4</p>
+       
+        </div>
+    </div>
+
+
+</section>
+
+<div style="text-align:center;">
+    <a href="index.html">⬅ Back to Home</a>
+</div>
+
+</body>
+</html>
+
+
+
+
